@@ -6,7 +6,11 @@ local session_manager = {}
 
 --- Apply user settings.
 ---@param values table
-function session_manager.setup(values) setmetatable(config, { __index = vim.tbl_extend('force', config.defaults, values) }) end
+function session_manager.setup(values)
+  setmetatable(config, { __index = vim.tbl_extend('force', config.defaults, values) })
+  -- Normalize provided paths such as `~` to absolute paths
+  config.autosave_ignore_dirs = vim.tbl_map(vim.fs.normalize, config.autosave_ignore_dirs)
+end
 
 --- Selects a session a loads it.
 ---@param discard_current boolean: If `true`, do not check for unsaved buffers.

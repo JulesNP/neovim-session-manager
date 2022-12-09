@@ -195,11 +195,7 @@ function utils.is_restorable_buffer_present()
 end
 
 ---@return boolean
-function utils.is_dir_in_ignore_list()
-  local cwd = vim.loop.cwd()
-  -- Use `normalize` to allow paths like `~/.config`.
-  return vim.tbl_contains(config.autosave_ignore_dirs, cwd) or vim.tbl_contains(vim.fs.normalize(config.autosave_ignore_dirs), cwd)
-end
+function utils.is_dir_in_ignore_list() return vim.tbl_contains(config.autosave_ignore_dirs, vim.loop.cwd()) end
 
 --- Partially shorten path if length exceeds defined max_path_length.
 ---@param path table
